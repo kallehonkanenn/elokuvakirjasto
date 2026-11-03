@@ -42,12 +42,14 @@ public class MovieController {
     @GetMapping("/addmovie")
     public String addMovie(Model model) {
         model.addAttribute("movie", new Movie());
+        addFormLists(model);
         return "addmovie";
     }
 
     @GetMapping("/editmovie/{id}")
     public String editMovie(@PathVariable("id") Long id, Model model) {
         model.addAttribute("movie", movieRepository.findById(id).orElse(new Movie()));
+        addFormLists(model);
         return "addmovie";
     }
 
