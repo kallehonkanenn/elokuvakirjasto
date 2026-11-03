@@ -102,6 +102,14 @@ public class Movie {
         this.genre = genre;
     }
 
+    public List<Actor> getActors() {
+        return actors;
+    }
+
+    public void setActors(List<Actor> actors) {
+        this.actors = actors;
+    }
+
     @Override
     public String toString() {
         return "Movie [id=" + id + ", title=" + title + ", releaseYear=" + releaseYear + ", description=" + description

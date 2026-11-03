@@ -44,6 +44,14 @@ public class Actor {
         this.name = name;
     }
 
+    public List<Movie> getMovies() {
+        return movies;
+    }
+
+    public void setMovies(List<Movie> movies) {
+        this.movies = movies;
+    }
+
     @Override
     public String toString() {
         return "Actor [id=" + id + ", name=" + name + "]";
