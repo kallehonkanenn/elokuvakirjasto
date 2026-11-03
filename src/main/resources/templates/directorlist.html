@@ -1,0 +1,38 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Directors</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+    <h1>Directors</h1>
+
+    <p th:if="${param.error}" style="color: red">Cannot delete: this director is used by a movie.</p>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        <tr th:each="d : ${directors}">
+            <td th:text="${d.name}">name</td>
+            <td><a th:href="@{/deletedirector/{id}(id=${d.id})}"
+                    onclick="return confirm('Delete this director?')">Delete</a>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Add genre</h2>
+    <form th:object="${director}" th:action="@{/savedirector}" action="#" method="post">
+        <p>Name: <input type="text" th:field="*{name}" />
+            <input type="submit" value="Save" />
+        </p>
+    </form>
+
+    <p><a th:href="@{/movielist}">Back to movies</a></p>
+</body>
+
+</html>

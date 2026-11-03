@@ -1,0 +1,37 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Actors</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link type="text/css" rel="stylesheet" href="/css/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" />
+</head>
+
+<body>
+    <h1>Actors</h1>
+
+    <p th:if="${param.error}" style="color: red">Cannot delete: this actor is used by a movie.</p>
+
+    <table class="table table-striped">
+        <tr>
+            <th>Name</th>
+            <th></th>
+        </tr>
+        <tr th:each="a : ${actors}">
+            <td th:text="${a.name}">name</td>
+            <td><a th:href="@{/deleteactor/{id}(id=${a.id})}" onclick="return confirm('Delete this actor?')">Delete</a>
+            </td>
+        </tr>
+    </table>
+
+    <h2>Add actor</h2>
+    <form th:object="${actor}" th:action="@{/saveactor}" action="#" method="post">
+        <p>Name: <input type="text" th:field="*{name}" />
+            <input type="submit" value="Save" />
+        </p>
+    </form>
+
+    <p><a th:href="@{/movielist}">Back to movies</a></p>
+</body>
+
+</html>
