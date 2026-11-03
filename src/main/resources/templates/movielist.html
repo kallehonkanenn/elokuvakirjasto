@@ -9,24 +9,30 @@
 
 <body>
     <h1>Movies</h1>
-    <table>
+    <table class="table table-striped">
         <tr>
             <th>Title</th>
             <th>Year</th>
             <th>Director</th>
             <th>Genre</th>
             <th>Actors</th>
+            <th></th>
+            <th></th>
         </tr>
         <tr th:each="movie : ${movies}">
             <td th:text="${movie.title}">title</td>
             <td th:text="${movie.releaseYear}">year</td>
-            <td th:text="${movie.director.name}">director</td>
-            <td th:text="${movie.genre.name}">genre</td>
+            <td th:text="${movie.director?.name}">director</td>
+            <td th:text="${movie.genre?.name}">genre</td>
             <td>
                 <span th:each="actor, stat : ${movie.actors}" th:text="${actor.name + (stat.last ? '' : ', ')}"></span>
             </td>
+            <td><a th:href="@{/editmovie/{id}(id=${movie.id})}">Edit</a></td>
+            <td><a th:href="@{/deletemovie/{id}(id=${movie.id})}"
+                    onclick="return confirm('Delete this movie?')">Delete</a></td>
         </tr>
     </table>
+    <p><a th:href="@{/addmovie}">Add movie</a></p>
 </body>
 
 </html>

@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Add / Edit Movie</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+
+<body>
+    <h1>Add / Edit Movie</h1>
+
+    <form th:object="${movie}" th:action="@{/savemovie}" action="#" method="post">
+
+
+        <input type="hidden" th:field="*{id}" />
+
+        <p>Title: <input type="text" th:field="*{title}" /></p>
+        <p>Release year: <input type="text" th:field="*{releaseYear}" /></p>
+        <p>Description:<br />
+            <textarea th:field="*{description}" rows="4" cols="50"></textarea>
+        </p>
+
+        <p>Director:
+            <select name="director">
+                <option th:each="d : ${directors}" th:value="${d.id}" th:text="${d.name}"
+                    th:selected="${movie.director != null and movie.director.id == d.id}"></option>
+            </select>
+        </p>
+
+        <p>Genre:
+            <select name="genre">
+                <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.name}"
+                    th:selected="${movie.genre != null and movie.genre.id == g.id}"></option>
+            </select>
+        </p>
+
+        <p>Actors (pidä Ctrl pohjassa valitaksesi useita):<br />
+            <select name="actors" multiple="multiple" size="6">
+                <option th:each="a : ${actors}" th:value="${a.id}" th:text="${a.name}"
+                    th:selected="${#lists.contains(movie.actors.![id], a.id)}"></option>
+            </select>
+        </p>
+
+        <input type="submit" value="Save" />
+        <a th:href="@{/movielist}">Cancel</a>
+    </form>
+</body>
+
+</html>
