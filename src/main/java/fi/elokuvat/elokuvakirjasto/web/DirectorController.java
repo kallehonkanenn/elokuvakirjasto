@@ -37,8 +37,8 @@ public class DirectorController {
     public String saveDirector(@Valid @ModelAttribute("director") Director director, BindingResult bindingResult,
             Model model) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("genres", genreRepository.findAll());
-            return "genrelist";
+            model.addAttribute("directors", directorRepository.findAll());
+            return "directorlist";
         }
         directorRepository.save(director);
         return "redirect:/directorlist";

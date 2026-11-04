@@ -15,7 +15,7 @@
         <input type="hidden" th:field="*{id}" />
 
         <p>Title: <input type="text" th:field="*{title}" />
-            <span th:if="${fields.hasErrors('title')}" th:errors="*{title}" style="color: red"></span>
+            <span th:if="${#fields.hasErrors('title')}" th:errors="*{title}" style="color: red"></span>
         </p>
 
         <p>Release year: <input type="text" th:field="*{releaseYear}" />
