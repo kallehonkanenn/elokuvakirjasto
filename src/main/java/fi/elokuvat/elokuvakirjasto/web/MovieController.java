@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
 
+import java.security.Principal;
+
 @Controller
 public class MovieController {
 
@@ -37,8 +39,9 @@ public class MovieController {
     }
 
     @GetMapping("/movielist")
-    public String movieList(Model model) {
+    public String movieList(Model model, Principal principal) {
         model.addAttribute("movies", movieRepository.findAll());
+        model.addAttribute("loggedIn", principal != null);
         return "movielist";
     }
 

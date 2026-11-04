@@ -4,12 +4,15 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import fi.elokuvat.elokuvakirjasto.domain.Actor;
+import fi.elokuvat.elokuvakirjasto.domain.AppUser;
 import fi.elokuvat.elokuvakirjasto.domain.Director;
 import fi.elokuvat.elokuvakirjasto.domain.Genre;
 import fi.elokuvat.elokuvakirjasto.domain.Movie;
 import fi.elokuvat.elokuvakirjasto.repository.ActorRepository;
+import fi.elokuvat.elokuvakirjasto.repository.AppUserRepository;
 import fi.elokuvat.elokuvakirjasto.repository.DirectorRepository;
 import fi.elokuvat.elokuvakirjasto.repository.GenreRepository;
 import fi.elokuvat.elokuvakirjasto.repository.MovieRepository;
@@ -23,7 +26,8 @@ public class ElokuvakirjastoApplication {
 
 	@Bean
 	public CommandLineRunner demo(MovieRepository movieRepository, GenreRepository genreRepository,
-			DirectorRepository directorRepository, ActorRepository actorRepository) {
+			DirectorRepository directorRepository, ActorRepository actorRepository,
+			AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
 		return (args) -> {
 			Genre scifi = genreRepository.save(new Genre("Sci-Fi"));
 			Genre crime = genreRepository.save(new Genre("Crime"));
@@ -54,6 +58,8 @@ public class ElokuvakirjastoApplication {
 			batman.getActors().add(bale);
 			batman.getActors().add(ledger);
 			movieRepository.save(batman);
+
+			appUserRepository.save(new AppUser("admin", passwordEncoder.encode("admin123"), "ADMIN"));
 
 		};
 	}

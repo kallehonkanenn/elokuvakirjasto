@@ -9,7 +9,7 @@
 
 <body>
     <h1>Movies</h1>
-    <p>
+    <p th:if="${loggedIn}">
         <a th:href="@{/genrelist}">Genres</a> |
         <a th:href="@{/directorlist}">Directors</a> |
         <a th:href="@{/actorlist}">Actors</a>
@@ -21,8 +21,8 @@
             <th>Director</th>
             <th>Genre</th>
             <th>Actors</th>
-            <th></th>
-            <th></th>
+            <th th:if="${loggedIn}"></th>
+            <th th:if="${loggedIn}"></th>
         </tr>
         <tr th:each="movie : ${movies}">
             <td th:text="${movie.title}">title</td>
@@ -32,12 +32,16 @@
             <td>
                 <span th:each="actor, stat : ${movie.actors}" th:text="${actor.name + (stat.last ? '' : ', ')}"></span>
             </td>
-            <td><a th:href="@{/editmovie/{id}(id=${movie.id})}">Edit</a></td>
-            <td><a th:href="@{/deletemovie/{id}(id=${movie.id})}"
+            <td th:if="${loggedIn}"><a th:href="@{/editmovie/{id}(id=${movie.id})}">Edit</a></td>
+            <td th:if="${loggedIn}"><a th:href="@{/deletemovie/{id}(id=${movie.id})}"
                     onclick="return confirm('Delete this movie?')">Delete</a></td>
         </tr>
     </table>
-    <p><a th:href="@{/addmovie}">Add movie</a></p>
+    <p th:if="${loggedIn}"><a th:href="@{/addmovie}">Add movie</a></p>
+
+    <p th:if="${!loggedIn}"><a th:href="@{/login}">Admin login</a></p>
+    <form th:if="${loggedIn}" th:action="@{/logout}" method="post">
+    </form>
 </body>
 
 </html>
