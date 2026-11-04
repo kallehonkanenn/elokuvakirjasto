@@ -41,6 +41,7 @@
 
     <p th:if="${!loggedIn}"><a th:href="@{/login}">Admin login</a></p>
     <form th:if="${loggedIn}" th:action="@{/logout}" method="post">
+        <input type="submit" value="Log out" />
     </form>
 </body>
 
