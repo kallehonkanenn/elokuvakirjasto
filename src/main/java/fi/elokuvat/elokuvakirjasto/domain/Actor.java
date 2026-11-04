@@ -8,6 +8,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
+import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.NotBlank;
 
 @Entity
 public class Actor {
@@ -16,6 +18,8 @@ public class Actor {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Name is required")
+    @Size(message = "Name can be at most 150 characters")
     private String name;
 
     @ManyToMany(mappedBy = "actors")

@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import fi.elokuvat.elokuvakirjasto.domain.Genre;
 import fi.elokuvat.elokuvakirjasto.repository.GenreRepository;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 @Controller
 public class GenreController {
 
@@ -27,7 +31,11 @@ public class GenreController {
     }
 
     @PostMapping("/savegenre")
-    public String saveGenre(Genre genre) {
+    public String saveGenre(@Valid @ModelAttribute("genre") Genre genre, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("genres", genreRepository.findAll());
+            return "genrelist";
+        }
         genreRepository.save(genre);
         return "redirect:/genrelist";
     }

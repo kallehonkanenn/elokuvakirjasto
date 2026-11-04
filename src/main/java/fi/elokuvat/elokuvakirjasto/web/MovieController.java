@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+
 @Controller
 public class MovieController {
 
@@ -54,7 +57,11 @@ public class MovieController {
     }
 
     @PostMapping("/savemovie")
-    public String saveMovie(Movie movie) {
+    public String saveMovie(@Valid Movie movie, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            addFormLists(model);
+            return "addmovie";
+        }
         movieRepository.save(movie);
         return "redirect:/movielist";
     }

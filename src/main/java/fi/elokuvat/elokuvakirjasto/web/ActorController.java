@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import fi.elokuvat.elokuvakirjasto.domain.Actor;
 import fi.elokuvat.elokuvakirjasto.repository.ActorRepository;
 
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+
 @Controller
 public class ActorController {
 
@@ -27,7 +31,11 @@ public class ActorController {
     }
 
     @PostMapping("/saveactor")
-    public String saveActor(Actor actor) {
+    public String saveActor(@Valid @ModelAttribute("actor") Actor actor, BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("actors", actorRepository.findAll());
+            return "actorlist";
+        }
         actorRepository.save(actor);
         return "redirect:/actorlist";
     }

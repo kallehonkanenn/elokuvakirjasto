@@ -29,6 +29,7 @@
     <form th:object="${director}" th:action="@{/savedirector}" action="#" method="post">
         <p>Name: <input type="text" th:field="*{name}" />
             <input type="submit" value="Save" />
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"></span>
         </p>
     </form>
 

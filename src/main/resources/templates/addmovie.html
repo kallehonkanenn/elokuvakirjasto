@@ -14,10 +14,18 @@
 
         <input type="hidden" th:field="*{id}" />
 
-        <p>Title: <input type="text" th:field="*{title}" /></p>
-        <p>Release year: <input type="text" th:field="*{releaseYear}" /></p>
+        <p>Title: <input type="text" th:field="*{title}" />
+            <span th:if="${fields.hasErrors('title')}" th:errors="*{title}" style="color: red"></span>
+        </p>
+
+        <p>Release year: <input type="text" th:field="*{releaseYear}" />
+            <span th:if="${#fields.hasErrors('releaseYear')}" th:errors="*{releaseYear}" style="color: red"></span>
+        </p>
+
+
         <p>Description:<br />
             <textarea th:field="*{description}" rows="4" cols="50"></textarea>
+            <span th:if="${#fields.hasErrors('description')}" th:errors="*{description}" style="color: red"></span>
         </p>
 
         <p>Director:
@@ -25,6 +33,7 @@
                 <option th:each="d : ${directors}" th:value="${d.id}" th:text="${d.name}"
                     th:selected="${movie.director != null and movie.director.id == d.id}"></option>
             </select>
+            <span th:if="${#fields.hasErrors('director')}" th:errors="*{director}" style="color: red"></span>
         </p>
 
         <p>Genre:
@@ -32,6 +41,7 @@
                 <option th:each="g : ${genres}" th:value="${g.id}" th:text="${g.name}"
                     th:selected="${movie.genre != null and movie.genre.id == g.id}"></option>
             </select>
+            <span th:if="${#fields.hasErrors('genre')}" th:errors="*{genre}" style="color: red"></span>
         </p>
 
         <p>Actors (pidä Ctrl pohjassa valitaksesi useita):<br />

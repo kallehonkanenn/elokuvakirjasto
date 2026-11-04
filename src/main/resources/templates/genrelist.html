@@ -28,6 +28,7 @@
     <form th:object="${genre}" th:action="@{/savegenre}" action="#" method="post">
         <p>Name: <input type="text" th:field="*{name}" />
             <input type="submit" value="Save" />
+            <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" style="color: red"></span>
         </p>
     </form>
 

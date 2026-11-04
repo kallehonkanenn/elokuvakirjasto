@@ -14,6 +14,11 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Movie {
@@ -22,17 +27,25 @@ public class Movie {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Title is required")
+    @Size(max = 200, message = "Title can be at most 200 characters")
     private String title;
+
+    @Min(value = 1888, message = "Year must be 1888 or later")
+    @Max(value = 2100, message = "Year must be 2100 or earlier")
     private int releaseYear;
 
+    @Size(max = 1000, message = "Description can be at most 1000 characters")
     @Column(length = 1000)
     private String description;
 
+    @NotNull(message = "Select a director")
     @ManyToOne
     @JoinColumn(name = "director_id")
     @JsonIgnoreProperties("movies")
     private Director director;
 
+    @NotNull(message = "Select a genre")
     @ManyToOne
     @JoinColumn(name = "genre_id")
     @JsonIgnoreProperties("movies")
