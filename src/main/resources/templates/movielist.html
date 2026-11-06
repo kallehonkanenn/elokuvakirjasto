@@ -9,6 +9,17 @@
 
 <body>
     <h1>Movies</h1>
+    <form th:action="@{/movielist}" method="get">
+        <input type="text" name="q" th:value="${q}" placeholder="Search movies..." />
+        <select name="by">
+            <option value="title" th:selected="${by =='title'}">Title</option>
+            <option value="director" th:selected="${by == 'director'}">Director</option>
+            <option value="actor" th:selected="${by == 'actor'}">Actor</option>
+            <option value="genre" th:selected="${by == 'genre'}">Genre</option>
+        </select>
+        <input type="submit" value="Search" />
+        <a th:href="@{/movielist}">Clear</a>
+    </form>
     <p th:if="${loggedIn}">
         <a th:href="@{/genrelist}">Genres</a> |
         <a th:href="@{/directorlist}">Directors</a> |
@@ -37,6 +48,7 @@
                     onclick="return confirm('Delete this movie?')">Delete</a></td>
         </tr>
     </table>
+    <p th:if="${#lists.isEmpty(movies)}"> No movies found</p>
     <p th:if="${loggedIn}"><a th:href="@{/addmovie}">Add movie</a></p>
 
     <p th:if="${!loggedIn}"><a th:href="@{/login}">Admin login</a></p>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import jakarta.validation.Valid;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.Principal;
 
@@ -39,8 +40,25 @@ public class MovieController {
     }
 
     @GetMapping("/movielist")
-    public String movieList(Model model, Principal principal) {
-        model.addAttribute("movies", movieRepository.findAll());
+    public String movieList(@RequestParam(name = "q", required = false) String q,
+            @RequestParam(name = "by", defaultValue = "title") String by,
+            Model model, Principal principal) {
+
+        Iterable<Movie> movies;
+        if (q == null || q.isBlank()) {
+            movies = movieRepository.findAll();
+        } else {
+            movies = switch (by) {
+                case "director" -> movieRepository.findByDirectorNameContainingIgnoreCase(q);
+                case "genre" -> movieRepository.findByGenreNameContainingIgnoreCase(q);
+                case "actor" -> movieRepository.findDistinctByActorsNameContainingIgnoreCase(q);
+                default -> movieRepository.findByTitleContainingIgnoreCase(q);
+            };
+        }
+
+        model.addAttribute("movies", movies);
+        model.addAttribute("q", q);
+        model.addAttribute("by", by);
         model.addAttribute("loggedIn", principal != null);
         return "movielist";
     }
