@@ -62,7 +62,7 @@ public class ElokuvakirjastoApplication {
 			batman.getActors().add(ledger);
 			movieRepository.save(batman);
 
-			appUserRepository.save(new AppUser("admin", passwordEncoder.encode("adminPassword"), "ADMIN"));
+			appUserRepository.save(new AppUser("admin", passwordEncoder.encode(adminPassword), "ADMIN"));
 
 		};
 	}
