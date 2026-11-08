@@ -1,5 +1,6 @@
 package fi.elokuvat.elokuvakirjasto;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +29,8 @@ public class ElokuvakirjastoApplication {
 	@Bean
 	public CommandLineRunner demo(MovieRepository movieRepository, GenreRepository genreRepository,
 			DirectorRepository directorRepository, ActorRepository actorRepository,
-			AppUserRepository appUserRepository, PasswordEncoder passwordEncoder) {
+			AppUserRepository appUserRepository, PasswordEncoder passwordEncoder,
+			@Value("${app.admin.password}") String adminPassword) {
 		return (args) -> {
 			Genre scifi = genreRepository.save(new Genre("Sci-Fi"));
 			Genre crime = genreRepository.save(new Genre("Crime"));
@@ -60,7 +62,7 @@ public class ElokuvakirjastoApplication {
 			batman.getActors().add(ledger);
 			movieRepository.save(batman);
 
-			appUserRepository.save(new AppUser("admin", passwordEncoder.encode("admin123"), "ADMIN"));
+			appUserRepository.save(new AppUser("admin", passwordEncoder.encode("adminPassword"), "ADMIN"));
 
 		};
 	}
