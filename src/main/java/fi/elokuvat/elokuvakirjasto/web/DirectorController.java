@@ -18,12 +18,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @Controller
 public class DirectorController {
 
-    private final GenreRepository genreRepository;
     private DirectorRepository directorRepository;
 
     public DirectorController(DirectorRepository directorRepository, GenreRepository genreRepository) {
         this.directorRepository = directorRepository;
-        this.genreRepository = genreRepository;
     }
 
     @GetMapping("/directorlist")

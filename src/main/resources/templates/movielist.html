@@ -48,7 +48,7 @@
                     onclick="return confirm('Delete this movie?')">Delete</a></td>
         </tr>
     </table>
-    <p th:if="${#lists.isEmpty(movies)}"> No movies found</p>
+    <p th:if="${#lists.isEmpty(movies)}">No movies found.</p>
     <p th:if="${loggedIn}"><a th:href="@{/addmovie}">Add movie</a></p>
 
     <p th:if="${!loggedIn}"><a th:href="@{/login}">Admin login</a></p>
